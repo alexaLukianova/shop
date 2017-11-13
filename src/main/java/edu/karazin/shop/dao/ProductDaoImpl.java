@@ -21,15 +21,21 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	@Override
-	public List<Product> search(String searchText) {
+	public List<Product> findByText(String searchText) {
 		return em.createQuery("from Product p where p.title like :text or p.description like :text", Product.class)
 				.setParameter("text", "%" + searchText + "%")
 				.getResultList();
 	}
 
 	@Override
+	public List<Product> findAll() {
+		return em.createQuery("from Product", Product.class)
+				.getResultList();
+	}
+
+	@Override
 	public Product save(Product prod) {
-		if (em.contains(prod)) {
+		if (!em.contains(prod)) {
 			return em.merge(prod);
 		} else {
 			em.persist(prod);

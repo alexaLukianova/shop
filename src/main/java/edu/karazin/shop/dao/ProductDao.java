@@ -8,7 +8,9 @@ public interface ProductDao {
 
 	Product findById(Long id);
 
-	List<Product> search(String searchText);
+	List<Product> findByText(String searchText);
+
+	List<Product> findAll();
 
 	Product save(Product prod);
 
