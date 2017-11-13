@@ -3,6 +3,8 @@ package edu.karazin.shop.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import edu.karazin.shop.model.Product;
@@ -41,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public Long addProduct(Product prod) {
 		// auto increment emulation
 		long maxId = 0L;
@@ -57,12 +60,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public void updateProduct(Product prod) {
 		removeProduct(prod.getId());
 		PRODUCTS.add(prod);
 	}
 
 	@Override
+	@Transactional
 	public void removeProduct(Long id) {
 		Product p = findById(id);
 		if (p != null) {
