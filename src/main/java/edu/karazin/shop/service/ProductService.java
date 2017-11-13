@@ -6,5 +6,13 @@ import edu.karazin.shop.model.Product;
 
 public interface ProductService {
 
-	List<Product> filter(String searchText);
+	Product getProduct(Long id);
+
+	List<Product> searchProducts(String searchText);
+
+	Long addProduct(Product prod);
+
+	void updateProduct(Product prod);
+
+	void removeProduct(Long id);
 }

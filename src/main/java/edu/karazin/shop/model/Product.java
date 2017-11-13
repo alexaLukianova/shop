@@ -2,34 +2,36 @@ package edu.karazin.shop.model;
 
 public class Product {
 
-	private long id;
+	private Long id;
 	private String title;
 	private String description;
-	private String image;
+	private byte[] image;
+	private String imageMimeType;
 	private long cost;
 	private int balance;
 
 	public Product() {
 	}
 
-	public Product(long id, String title, String description) {
-		this(id, title, description, null, 0L, 0);
+	public Product(Long id, String title, String description) {
+		this(id, title, description, null, null, 0L, 0);
 	}
 
-	public Product(long id, String title, String description, String image, long cost, int balance) {
+	public Product(Long id, String title, String description, byte[] image, String imageMimeType, long cost, int balance) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.image = image;
+		this.imageMimeType = imageMimeType;
 		this.cost = cost;
 		this.balance = balance;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -49,12 +51,20 @@ public class Product {
 		this.description = description;
 	}
 
-	public String getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
-	public void setImage(String image) {
+	public void setImage(byte[] image) {
 		this.image = image;
+	}
+
+	public String getImageMimeType() {
+		return imageMimeType;
+	}
+
+	public void setImageMimeType(String imageMimeType) {
+		this.imageMimeType = imageMimeType;
 	}
 
 	public long getCost() {

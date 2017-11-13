@@ -1,7 +1,6 @@
 package edu.karazin.shop.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -12,16 +11,22 @@ import edu.karazin.shop.model.Product;
 public class ProductServiceImpl implements ProductService {
 
 	// TODO: Move data to Data Base
-	private static final List<Product> PRODUCTS = Arrays.asList(
-			new Product(1L, "apple", ""),
-			new Product(2L, "apricot", ""),
-			new Product(3L, "banana", ""),
-			new Product(4L, "grape", ""),
-			new Product(5L, "cherry", "")
-	);
+	@SuppressWarnings("unchecked")
+	private static final List<Product> PRODUCTS = new ArrayList() {{
+			add(new Product(1L, "apple", ""));
+			add(new Product(2L, "apricot", ""));
+			add(new Product(3L, "banana", ""));
+			add(new Product(4L, "grape", ""));
+		    add(new Product(5L, "cherry", ""));
+	}};
 
 	@Override
-	public List<Product> filter(String searchText) {
+	public Product getProduct(Long id) {
+		return findById(id);
+	}
+
+	@Override
+	public List<Product> searchProducts(String searchText) {
 		if (searchText == null || searchText.trim().isEmpty()) {
 			return PRODUCTS;
 		}
@@ -35,10 +40,49 @@ public class ProductServiceImpl implements ProductService {
 		return results;
 	}
 
+	@Override
+	public Long addProduct(Product prod) {
+		// auto increment emulation
+		long maxId = 0L;
+		for (Product p : PRODUCTS) {
+			if (p.getId() > maxId) {
+				maxId = p.getId();
+			}
+		}
+
+		// insert to DB emulation
+		prod.setId(++maxId);
+		PRODUCTS.add(prod);
+		return prod.getId();
+	}
+
+	@Override
+	public void updateProduct(Product prod) {
+		removeProduct(prod.getId());
+		PRODUCTS.add(prod);
+	}
+
+	@Override
+	public void removeProduct(Long id) {
+		Product p = findById(id);
+		if (p != null) {
+			PRODUCTS.remove(p);
+		}
+	}
+
 	private boolean containsWithNullCheck(String source, String searchText) {
 		if (source == null || source.trim().isEmpty()) {
 			return false;
 		}
 		return source.toLowerCase().contains(searchText.toLowerCase());
+	}
+
+	private Product findById(Long id) {
+		for (Product p : PRODUCTS) {
+			if (p.getId() == id) {
+				return p;
+			}
+		}
+		return null;
 	}
 }

@@ -15,9 +15,17 @@
 
     <ul>
     <c:forEach items="${products}" var="prod">
-        <li>${prod.title}</li>
+        <li>
+            <h3>${prod.title} ( ${prod.balance} )</h3>
+            <p>${prod.description}</p>
+            <a href="/product/${prod.id}">Edit</a>
+        </li>
     </c:forEach>
     </ul>
+
+    <div>
+        <a href="/product">New product</a>
+    </div>
 
 </body>
 </html>
