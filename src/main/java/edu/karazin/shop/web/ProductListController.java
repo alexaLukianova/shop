@@ -28,7 +28,7 @@ public class ProductListController {
 	public String listProducts(Model model,
 			@RequestParam(name = "searchText", required = false) String searchText) {
 		log.info("Read full product list");
-		model.addAttribute("products", productService.filter(null));
+		model.addAttribute("products", productService.searchProducts(null));
 		model.addAttribute("searchForm", new ProductSerachForm(searchText));
 		return "product-list";
 	}
@@ -37,7 +37,7 @@ public class ProductListController {
 	public String searchProducts(Model model,
 			@ModelAttribute("searchForm") ProductSerachForm form) {
 		log.info("Search product list with {}", form.getSearchText());
-		model.addAttribute("products", productService.filter(form.getSearchText()));
+		model.addAttribute("products", productService.searchProducts(form.getSearchText()));
 		return "product-list";
 	}
 }
